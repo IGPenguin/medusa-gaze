@@ -16,9 +16,9 @@ Medusa Gaze lives natively inside Claude Code as a `/medusa` skill. No API keys,
 
 Type `/medusa` in any [Claude Code](https://claude.com/product/claude-code) session.
 
-1. Silently reads `CLAUDE.md`, `TODOs.md`, `DESIGN.md`, `CONTENT.md`, `WIKI.md` — whatever's present
+1. Silently reads `CLAUDE.md`, `TODOs.md`, `DESIGN.md`, `CONTENT.md`, `WIKI.md` - whatever's present
 2. Asks which task to complete, or finds the highest priority open item
-3. Interrogates the task - not a checklist, a conversation — until scope is airtight
+3. Interrogates the task - not a checklist, a conversation - until scope is airtight
 4. Generates the **Gaze File** and saves it to disk before touching anything
 5. Executes precisely against the Gaze File; out-of-scope catches go into the Drift Jar
 6. Deletes the task from `TODOs.md` when done, then reviews the Jar
@@ -37,11 +37,11 @@ Type `/medusa` in any [Claude Code](https://claude.com/product/claude-code) sess
 
 Before execution begins, Medusa writes a contract to `.medusa/gaze-YYYY-MM-DD-HHMM-[slug].md`:
 
-- Scope — what's in AND what's explicitly out
+- Scope - what's in AND what's explicitly out
 - Acceptance criteria
 - Execution plan
 - Risk flags
-- Drift Jar — for out-of-scope catches during execution
+- Drift Jar - for out-of-scope catches during execution
 
 The Gaze File can be executed immediately or saved for a future session.
 
@@ -65,8 +65,8 @@ The execution philosophy and Gaze File template live in your home directory. Cha
 
 | File | Purpose |
 | :--- | :--- |
-| `~/.claude/medusa/manifesto.md` | Execution philosophy — what "done" means, scoping rules, the Drift Jar rule |
-| `~/.claude/medusa/papyrus.md` | Gaze File template — rename fields, add sections, change structure |
+| `~/.claude/medusa/manifesto.md` | Execution philosophy: what "done" means, scoping rules, the Drift Jar rule |
+| `~/.claude/medusa/papyrus.md` | Gaze File template: rename fields, add sections, change structure |
 
 ### Setup
 
