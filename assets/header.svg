@@ -1,164 +1,212 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" width="1200" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" width="1200" height="220">
   <defs>
 
-    <!-- Background -->
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%"   stop-color="#020c04"/>
-      <stop offset="100%" stop-color="#030f05"/>
+      <stop offset="0%"   stop-color="#010b03"/>
+      <stop offset="100%" stop-color="#020e04"/>
     </linearGradient>
 
-    <!-- Dark vignette behind text so it pops over the snakes -->
-    <radialGradient id="textBg" cx="600" cy="100" r="380" gradientUnits="userSpaceOnUse">
-      <stop offset="0%"   stop-color="#000" stop-opacity="0.55"/>
+    <!-- Wide soft vignette so text reads over the chaos -->
+    <radialGradient id="vign" cx="600" cy="110" r="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#000" stop-opacity="0.62"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Glow for the bright snake highlight pass -->
-    <filter id="snakeGlow" x="-5%" y="-100%" width="110%" height="300%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glow" x="-6%" y="-120%" width="112%" height="340%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
 
-    <!-- Glow for text -->
-    <filter id="textGlow" x="-10%" y="-50%" width="120%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="tglow" x="-8%" y="-50%" width="116%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
 
-    <!-- Clip snakes to viewport -->
-    <clipPath id="vp">
-      <rect width="1200" height="200"/>
-    </clipPath>
+    <clipPath id="vp"><rect width="1200" height="220"/></clipPath>
 
     <!--
-      Snake paths: 2400px wide so a translateX(-1200px) animation loops seamlessly.
-      Each wavelength divides evenly into 1200 → pattern repeats perfectly at the loop point.
+      All paths span 0→2400px so translateX(-1200px) loops seamlessly.
+      Bezier control points use 2×amplitude so the visible peak equals the stated amplitude.
+      Wavelengths are factors of 1200 for a perfect seam at the loop point.
     -->
 
-    <!-- Snake A: y=38, amplitude=16, wavelength=200 (12 waves × 200 = 2400) -->
-    <path id="pA" fill="none" stroke-linecap="round"
-      d="M 0,38 Q 50,22 100,38 Q 150,54 200,38
-         Q 250,22 300,38 Q 350,54 400,38
-         Q 450,22 500,38 Q 550,54 600,38
-         Q 650,22 700,38 Q 750,54 800,38
-         Q 850,22 900,38 Q 950,54 1000,38
-         Q 1050,22 1100,38 Q 1150,54 1200,38
-         Q 1250,22 1300,38 Q 1350,54 1400,38
-         Q 1450,22 1500,38 Q 1550,54 1600,38
-         Q 1650,22 1700,38 Q 1750,54 1800,38
-         Q 1850,22 1900,38 Q 1950,54 2000,38
-         Q 2050,22 2100,38 Q 2150,54 2200,38
-         Q 2250,22 2300,38 Q 2350,54 2400,38"/>
+    <!-- A: y=15  A=7  wl=150 (16 waves)  ctrl up=1   down=29  → RIGHT -->
+    <path id="pA" fill="none" d="
+      M 0,15 Q 38,1 75,15 Q 113,29 150,15 Q 188,1 225,15 Q 263,29 300,15
+      Q 338,1 375,15 Q 413,29 450,15 Q 488,1 525,15 Q 563,29 600,15
+      Q 638,1 675,15 Q 713,29 750,15 Q 788,1 825,15 Q 863,29 900,15
+      Q 938,1 975,15 Q 1013,29 1050,15 Q 1088,1 1125,15 Q 1163,29 1200,15
+      Q 1238,1 1275,15 Q 1313,29 1350,15 Q 1388,1 1425,15 Q 1463,29 1500,15
+      Q 1538,1 1575,15 Q 1613,29 1650,15 Q 1688,1 1725,15 Q 1763,29 1800,15
+      Q 1838,1 1875,15 Q 1913,29 1950,15 Q 1988,1 2025,15 Q 2063,29 2100,15
+      Q 2138,1 2175,15 Q 2213,29 2250,15 Q 2288,1 2325,15 Q 2363,29 2400,15"/>
 
-    <!-- Snake B: y=100, amplitude=46, wavelength=300 (8 waves × 300 = 2400) — main -->
-    <path id="pB" fill="none" stroke-linecap="round"
-      d="M 0,100 Q 75,54 150,100 Q 225,146 300,100
-         Q 375,54 450,100 Q 525,146 600,100
-         Q 675,54 750,100 Q 825,146 900,100
-         Q 975,54 1050,100 Q 1125,146 1200,100
-         Q 1275,54 1350,100 Q 1425,146 1500,100
-         Q 1575,54 1650,100 Q 1725,146 1800,100
-         Q 1875,54 1950,100 Q 2025,146 2100,100
-         Q 2175,54 2250,100 Q 2325,146 2400,100"/>
+    <!-- B: y=40  A=20  wl=200 (12 waves)  ctrl up=0   down=80  → LEFT -->
+    <path id="pB" fill="none" d="
+      M 0,40 Q 50,0 100,40 Q 150,80 200,40 Q 250,0 300,40 Q 350,80 400,40
+      Q 450,0 500,40 Q 550,80 600,40 Q 650,0 700,40 Q 750,80 800,40
+      Q 850,0 900,40 Q 950,80 1000,40 Q 1050,0 1100,40 Q 1150,80 1200,40
+      Q 1250,0 1300,40 Q 1350,80 1400,40 Q 1450,0 1500,40 Q 1550,80 1600,40
+      Q 1650,0 1700,40 Q 1750,80 1800,40 Q 1850,0 1900,40 Q 1950,80 2000,40
+      Q 2050,0 2100,40 Q 2150,80 2200,40 Q 2250,0 2300,40 Q 2350,80 2400,40"/>
 
-    <!-- Snake C: y=162, amplitude=17, wavelength=240 (10 waves × 240 = 2400) -->
-    <path id="pC" fill="none" stroke-linecap="round"
-      d="M 0,162 Q 60,145 120,162 Q 180,179 240,162
-         Q 300,145 360,162 Q 420,179 480,162
-         Q 540,145 600,162 Q 660,179 720,162
-         Q 780,145 840,162 Q 900,179 960,162
-         Q 1020,145 1080,162 Q 1140,179 1200,162
-         Q 1260,145 1320,162 Q 1380,179 1440,162
-         Q 1500,145 1560,162 Q 1620,179 1680,162
-         Q 1740,145 1800,162 Q 1860,179 1920,162
-         Q 1980,145 2040,162 Q 2100,179 2160,162
-         Q 2220,145 2280,162 Q 2340,179 2400,162"/>
+    <!-- C: y=65  A=25  wl=300 (8 waves)   ctrl up=15  down=115 → RIGHT -->
+    <path id="pC" fill="none" d="
+      M 0,65 Q 75,15 150,65 Q 225,115 300,65 Q 375,15 450,65 Q 525,115 600,65
+      Q 675,15 750,65 Q 825,115 900,65 Q 975,15 1050,65 Q 1125,115 1200,65
+      Q 1275,15 1350,65 Q 1425,115 1500,65 Q 1575,15 1650,65 Q 1725,115 1800,65
+      Q 1875,15 1950,65 Q 2025,115 2100,65 Q 2175,15 2250,65 Q 2325,115 2400,65"/>
 
-    <!-- Snake D: y=100, amplitude=10, wavelength=400, inverted phase (6 waves × 400 = 2400) — counter-direction -->
-    <path id="pD" fill="none" stroke-linecap="round"
-      d="M 0,100 Q 100,110 200,100 Q 300,90 400,100
-         Q 500,110 600,100 Q 700,90 800,100
-         Q 900,110 1000,100 Q 1100,90 1200,100
-         Q 1300,110 1400,100 Q 1500,90 1600,100
-         Q 1700,110 1800,100 Q 1900,90 2000,100
-         Q 2100,110 2200,100 Q 2300,90 2400,100"/>
+    <!-- D: y=88  A=11  wl=150 (16 waves)  ctrl up=66  down=110 → LEFT -->
+    <path id="pD" fill="none" d="
+      M 0,88 Q 38,66 75,88 Q 113,110 150,88 Q 188,66 225,88 Q 263,110 300,88
+      Q 338,66 375,88 Q 413,110 450,88 Q 488,66 525,88 Q 563,110 600,88
+      Q 638,66 675,88 Q 713,110 750,88 Q 788,66 825,88 Q 863,110 900,88
+      Q 938,66 975,88 Q 1013,110 1050,88 Q 1088,66 1125,88 Q 1163,110 1200,88
+      Q 1238,66 1275,88 Q 1313,110 1350,88 Q 1388,66 1425,88 Q 1463,110 1500,88
+      Q 1538,66 1575,88 Q 1613,110 1650,88 Q 1688,66 1725,88 Q 1763,110 1800,88
+      Q 1838,66 1875,88 Q 1913,110 1950,88 Q 1988,66 2025,88 Q 2063,110 2100,88
+      Q 2138,66 2175,88 Q 2213,110 2250,88 Q 2288,66 2325,88 Q 2363,110 2400,88"/>
+
+    <!-- E: y=110 A=46  wl=400 (6 waves)   ctrl up=18  down=202 → LEFT  *** MAIN *** -->
+    <path id="pE" fill="none" d="
+      M 0,110 Q 100,18 200,110 Q 300,202 400,110 Q 500,18 600,110 Q 700,202 800,110
+      Q 900,18 1000,110 Q 1100,202 1200,110 Q 1300,18 1400,110 Q 1500,202 1600,110
+      Q 1700,18 1800,110 Q 1900,202 2000,110 Q 2100,18 2200,110 Q 2300,202 2400,110"/>
+
+    <!-- F: y=118 A=16  wl=200 (12 waves)  ctrl up=86  down=150 → RIGHT -->
+    <path id="pF" fill="none" d="
+      M 0,118 Q 50,86 100,118 Q 150,150 200,118 Q 250,86 300,118 Q 350,150 400,118
+      Q 450,86 500,118 Q 550,150 600,118 Q 650,86 700,118 Q 750,150 800,118
+      Q 850,86 900,118 Q 950,150 1000,118 Q 1050,86 1100,118 Q 1150,150 1200,118
+      Q 1250,86 1300,118 Q 1350,150 1400,118 Q 1450,86 1500,118 Q 1550,150 1600,118
+      Q 1650,86 1700,118 Q 1750,150 1800,118 Q 1850,86 1900,118 Q 1950,150 2000,118
+      Q 2050,86 2100,118 Q 2150,150 2200,118 Q 2250,86 2300,118 Q 2350,150 2400,118"/>
+
+    <!-- G: y=148 A=22  wl=300 (8 waves)   ctrl up=104 down=192 → LEFT -->
+    <path id="pG" fill="none" d="
+      M 0,148 Q 75,104 150,148 Q 225,192 300,148 Q 375,104 450,148 Q 525,192 600,148
+      Q 675,104 750,148 Q 825,192 900,148 Q 975,104 1050,148 Q 1125,192 1200,148
+      Q 1275,104 1350,148 Q 1425,192 1500,148 Q 1575,104 1650,148 Q 1725,192 1800,148
+      Q 1875,104 1950,148 Q 2025,192 2100,148 Q 2175,104 2250,148 Q 2325,192 2400,148"/>
+
+    <!-- H: y=168 A=9   wl=600 (4 waves)   ctrl up=150 down=186 → RIGHT -->
+    <path id="pH" fill="none" d="
+      M 0,168 Q 150,150 300,168 Q 450,186 600,168 Q 750,150 900,168 Q 1050,186 1200,168
+      Q 1350,150 1500,168 Q 1650,186 1800,168 Q 1950,150 2100,168 Q 2250,186 2400,168"/>
+
+    <!-- I: y=188 A=14  wl=240 (10 waves)  ctrl up=160 down=216 → RIGHT -->
+    <path id="pI" fill="none" d="
+      M 0,188 Q 60,160 120,188 Q 180,216 240,188 Q 300,160 360,188 Q 420,216 480,188
+      Q 540,160 600,188 Q 660,216 720,188 Q 780,160 840,188 Q 900,216 960,188
+      Q 1020,160 1080,188 Q 1140,216 1200,188 Q 1260,160 1320,188 Q 1380,216 1440,188
+      Q 1500,160 1560,188 Q 1620,216 1680,188 Q 1740,160 1800,188 Q 1860,216 1920,188
+      Q 1980,160 2040,188 Q 2100,216 2160,188 Q 2220,160 2280,188 Q 2340,216 2400,188"/>
+
+    <!-- J: y=208 A=7   wl=150 (16 waves)  ctrl up=194 down=222 → LEFT -->
+    <path id="pJ" fill="none" d="
+      M 0,208 Q 38,194 75,208 Q 113,222 150,208 Q 188,194 225,208 Q 263,222 300,208
+      Q 338,194 375,208 Q 413,222 450,208 Q 488,194 525,208 Q 563,222 600,208
+      Q 638,194 675,208 Q 713,222 750,208 Q 788,194 825,208 Q 863,222 900,208
+      Q 938,194 975,208 Q 1013,222 1050,208 Q 1088,194 1125,208 Q 1163,222 1200,208
+      Q 1238,194 1275,208 Q 1313,222 1350,208 Q 1388,194 1425,208 Q 1463,222 1500,208
+      Q 1538,194 1575,208 Q 1613,222 1650,208 Q 1688,194 1725,208 Q 1763,222 1800,208
+      Q 1838,194 1875,208 Q 1913,222 1950,208 Q 1988,194 2025,208 Q 2063,222 2100,208
+      Q 2138,194 2175,208 Q 2213,222 2250,208 Q 2288,194 2325,208 Q 2363,222 2400,208"/>
 
   </defs>
 
   <style>
-    /* All snake groups translated to start at left edge, path content is 0→2400px */
-    .sA { animation: slither  7s linear infinite; }
-    .sB { animation: slither 11s linear infinite; }
-    .sC { animation: slither  9s linear infinite; }
-    .sD { animation: slither-rev 17s linear infinite; }
+    /* LEFT movers */
+    .sB { animation: sl  8s linear infinite; }
+    .sD { animation: sl  6s linear infinite; }
+    .sE { animation: sl 13s linear infinite; }
+    .sG { animation: sl  9s linear infinite; }
+    .sJ { animation: sl  4s linear infinite; }
+    /* RIGHT movers */
+    .sA { animation: sr  5s linear infinite; }
+    .sC { animation: sr 11s linear infinite; }
+    .sF { animation: sr  7s linear infinite; }
+    .sH { animation: sr 18s linear infinite; }
+    .sI { animation: sr 10s linear infinite; }
 
-    @keyframes slither {
-      from { transform: translateX(0px);     }
-      to   { transform: translateX(-1200px); }
-    }
-    @keyframes slither-rev {
-      from { transform: translateX(-1200px); }
-      to   { transform: translateX(0px);     }
-    }
+    @keyframes sl { from{transform:translateX(0)}    to{transform:translateX(-1200px)} }
+    @keyframes sr { from{transform:translateX(-1200px)} to{transform:translateX(0)}   }
   </style>
 
-  <!-- Background fill -->
-  <rect width="1200" height="200" fill="url(#bg)"/>
+  <rect width="1200" height="220" fill="url(#bg)"/>
 
-  <!-- Snakes — clipped to viewport, rendered back-to-front -->
   <g clip-path="url(#vp)">
 
-    <!-- Snake A: thin, near top -->
-    <g class="sA" opacity="0.4">
-      <use href="#pA" stroke="#0b3318" stroke-width="4"/>
-      <use href="#pA" stroke="#1a6b38" stroke-width="2"/>
+    <!-- ── DEEP BACK: tiny edge snakes, almost invisible ── -->
+    <g class="sA" opacity="0.28">
+      <use href="#pA" stroke="#051a0b" stroke-width="3"/>
+      <use href="#pA" stroke="#0d4422" stroke-width="1.5"/>
+    </g>
+    <g class="sJ" opacity="0.25">
+      <use href="#pJ" stroke="#041808" stroke-width="3"/>
+      <use href="#pJ" stroke="#0a3d1a" stroke-width="1.5"/>
+    </g>
+    <g class="sH" opacity="0.20">
+      <use href="#pH" stroke="#052e16" stroke-width="4.5"/>
+      <use href="#pH" stroke="#0f5c28" stroke-width="2.5"/>
     </g>
 
-    <!-- Snake D: ghost snake drifting the other way -->
-    <g class="sD" opacity="0.18">
-      <use href="#pD" stroke="#052e16" stroke-width="4"/>
-      <use href="#pD" stroke="#0d5c26" stroke-width="2"/>
+    <!-- ── MID BACK ── -->
+    <g class="sD" opacity="0.40">
+      <use href="#pD" stroke="#0a3d1a" stroke-width="4.5"/>
+      <use href="#pD" stroke="#176638" stroke-width="2.5"/>
+    </g>
+    <g class="sB" opacity="0.52">
+      <use href="#pB" stroke="#0c4820" stroke-width="7"/>
+      <use href="#pB" stroke="#1a6b38" stroke-width="4"/>
+      <use href="#pB" stroke="#25a04a" stroke-width="1.8"/>
     </g>
 
-    <!-- Snake C: medium, near bottom -->
-    <g class="sC" opacity="0.52">
-      <use href="#pC" stroke="#0d4d22" stroke-width="7"/>
-      <use href="#pC" stroke="#16a34a" stroke-width="3.5"/>
-      <use href="#pC" stroke="#4ade80" stroke-width="1.5"/>
+    <!-- ── MID FRONT ── -->
+    <g class="sG" opacity="0.55">
+      <use href="#pG" stroke="#0f5226" stroke-width="8"/>
+      <use href="#pG" stroke="#1e8040" stroke-width="4.5"/>
+      <use href="#pG" stroke="#2db858" stroke-width="2"/>
+    </g>
+    <g class="sF" opacity="0.50">
+      <use href="#pF" stroke="#0d4d22" stroke-width="6"/>
+      <use href="#pF" stroke="#22c55e" stroke-width="3"/>
+    </g>
+    <g class="sI" opacity="0.58">
+      <use href="#pI" stroke="#0d5226" stroke-width="8"/>
+      <use href="#pI" stroke="#18a040" stroke-width="4.5"/>
+      <use href="#pI" stroke="#34d462" stroke-width="2"/>
     </g>
 
-    <!-- Snake B: main — wide, dramatic, glowing highlight -->
-    <g class="sB">
-      <use href="#pB" stroke="#062710" stroke-width="13" opacity="0.75"/>
-      <use href="#pB" stroke="#15803d" stroke-width="7"  opacity="0.9"/>
-      <use href="#pB" stroke="#4ade80" stroke-width="2.5" opacity="0.55" filter="url(#snakeGlow)"/>
+    <!-- ── FRONT ── -->
+    <g class="sC" opacity="0.65">
+      <use href="#pC" stroke="#0f5226" stroke-width="8"/>
+      <use href="#pC" stroke="#20a846" stroke-width="4.5"/>
+      <use href="#pC" stroke="#38d460" stroke-width="2"/>
+    </g>
+
+    <!-- ── MAIN: the big dramatic one sweeping through the center ── -->
+    <g class="sE">
+      <use href="#pE" stroke="#03120a" stroke-width="16" opacity="0.80"/>
+      <use href="#pE" stroke="#0e6b2e" stroke-width="10" opacity="0.90"/>
+      <use href="#pE" stroke="#16a34a" stroke-width="5.5" opacity="0.95"/>
+      <use href="#pE" stroke="#4ade80" stroke-width="2.2" opacity="0.55" filter="url(#glow)"/>
     </g>
 
   </g>
 
-  <!-- Vignette over snakes so text is readable -->
-  <rect width="1200" height="200" fill="url(#textBg)"/>
+  <!-- Soft dark vignette so "MEDUSA GAZE" cuts through -->
+  <rect width="1200" height="220" fill="url(#vign)"/>
 
-  <!-- "Medusa Gaze" — only text, no subtitle -->
   <text
-    x="600"
-    y="116"
+    x="600" y="132"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="80"
+    font-size="88"
     font-weight="bold"
-    letter-spacing="6"
+    letter-spacing="8"
     text-anchor="middle"
-    fill="#a7f3d0"
-    paint-order="stroke"
-    stroke="#020c04"
-    stroke-width="14"
-    stroke-linejoin="round"
-    filter="url(#textGlow)">Medusa Gaze</text>
+    fill="#d4fde8"
+    filter="url(#tglow)">MEDUSA GAZE</text>
 
 </svg>
