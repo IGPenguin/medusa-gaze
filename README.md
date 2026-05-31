@@ -2,16 +2,9 @@
   <img src="assets/header.svg" width="100%" alt="Medusa Gaze Header">
 </p>
 
-## 🐍 Close tasks. Not complete them, close them.
+## 🐍 Close tasks for real, not just complete them
 
 **Medusa Gaze** is a Claude Code skill that takes one task, refines it into locked scope, executes it precisely, and deletes it from your backlog. Tasks don't graduate from Medusa, they get done and crossed out.
-
-```
-/styx    → raw notes → prioritized TODOs.md
-/hades   → task → 6 orthogonal implementation paths
-/perseus → approach → strike team challenge
-/medusa  → task → interrogation → Gaze File → execution → deletion
-```
 
 ---
 
