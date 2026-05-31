@@ -2,11 +2,9 @@
   <img src="assets/header.svg" width="100%" alt="Medusa Gaze Header">
 </p>
 
-## 🐍 Close tasks. Not complete them — close them.
+## 🐍 Close tasks. Not complete them, close them.
 
-**Medusa Gaze** is a Claude Code skill that takes one task, interrogates it into locked scope, executes it precisely, and deletes it from your backlog. Tasks don't graduate from Medusa. They die.
-
-She's the end of the IGPenguin pipeline:
+**Medusa Gaze** is a Claude Code skill that takes one task, refines it into locked scope, executes it precisely, and deletes it from your backlog. Tasks don't graduate from Medusa, they get done and crossed out.
 
 ```
 /styx    → raw notes → prioritized TODOs.md
@@ -26,8 +24,8 @@ Medusa Gaze lives natively inside Claude Code as a `/medusa` skill. No API keys,
 Type `/medusa` in any [Claude Code](https://claude.com/product/claude-code) session.
 
 1. Silently reads `CLAUDE.md`, `TODOs.md`, `DESIGN.md`, `CONTENT.md`, `WIKI.md` — whatever's present
-2. Asks which task to seal, or finds the highest priority open item
-3. Interrogates the task — not a checklist, a conversation — until scope is airtight
+2. Asks which task to complete, or finds the highest priority open item
+3. Interrogates the task - not a checklist, a conversation — until scope is airtight
 4. Generates the **Gaze File** and saves it to disk before touching anything
 5. Executes precisely against the Gaze File; out-of-scope catches go into the Drift Jar
 6. Deletes the task from `TODOs.md` when done, then reviews the Jar
@@ -56,11 +54,11 @@ The Gaze File can be executed immediately or saved for a future session.
 
 ### The Drift Jar
 
-While executing, Medusa catches everything interesting that's out of scope — ideas, adjacent improvements, things noticed in passing — and holds them in the Drift Jar without interrupting execution. At the close, every Jar item gets a decision: push to `TODOs.md`, keep in the Gaze File, or discard. Nothing is silently lost.
+While executing, Medusa catches everything interesting that's out of scope? ideas, adjacent improvements, things noticed in passing - and holds them in the Drift Jar without interrupting execution. At the close, every Jar item gets a decision: push to `TODOs.md`, keep in the Gaze File, or discard. Nothing is silently lost.
 
 ### Safety
 
-Medusa asks for confirmation before any irreversible action — file deletion, destructive git operations, database drops — even if it was planned. She also pauses mid-execution if new information surfaces that materially changes the risk of the current plan (a changed file, a wrong assumption, a missing dependency). Both are one-line stops, not re-interrogations.
+Medusa asks for confirmation before any irreversible action: file deletion, destructive git operations, database drops - even if it was planned. She also pauses mid-execution if new information surfaces that materially changes the risk of the current plan (a changed file, a wrong assumption, a missing dependency). Both are one-line stops, not re-interrogations.
 
 ### History
 
