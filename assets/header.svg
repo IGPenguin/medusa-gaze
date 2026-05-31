@@ -1,64 +1,164 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="1200" height="240">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" width="1200" height="200">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0d0d0d"/>
-      <stop offset="100%" style="stop-color:#1a1008"/>
+
+    <!-- Background -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#020c04"/>
+      <stop offset="100%" stop-color="#030f05"/>
     </linearGradient>
-    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#4a2c00;stop-opacity:0"/>
-      <stop offset="50%" style="stop-color:#c47a00;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#4a2c00;stop-opacity:0"/>
-    </linearGradient>
-    <filter id="blur">
-      <feGaussianBlur stdDeviation="3"/>
+
+    <!-- Dark vignette behind text so it pops over the snakes -->
+    <radialGradient id="textBg" cx="600" cy="100" r="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#000" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glow for the bright snake highlight pass -->
+    <filter id="snakeGlow" x="-5%" y="-100%" width="110%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
+
+    <!-- Glow for text -->
+    <filter id="textGlow" x="-10%" y="-50%" width="120%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip snakes to viewport -->
+    <clipPath id="vp">
+      <rect width="1200" height="200"/>
+    </clipPath>
+
+    <!--
+      Snake paths: 2400px wide so a translateX(-1200px) animation loops seamlessly.
+      Each wavelength divides evenly into 1200 → pattern repeats perfectly at the loop point.
+    -->
+
+    <!-- Snake A: y=38, amplitude=16, wavelength=200 (12 waves × 200 = 2400) -->
+    <path id="pA" fill="none" stroke-linecap="round"
+      d="M 0,38 Q 50,22 100,38 Q 150,54 200,38
+         Q 250,22 300,38 Q 350,54 400,38
+         Q 450,22 500,38 Q 550,54 600,38
+         Q 650,22 700,38 Q 750,54 800,38
+         Q 850,22 900,38 Q 950,54 1000,38
+         Q 1050,22 1100,38 Q 1150,54 1200,38
+         Q 1250,22 1300,38 Q 1350,54 1400,38
+         Q 1450,22 1500,38 Q 1550,54 1600,38
+         Q 1650,22 1700,38 Q 1750,54 1800,38
+         Q 1850,22 1900,38 Q 1950,54 2000,38
+         Q 2050,22 2100,38 Q 2150,54 2200,38
+         Q 2250,22 2300,38 Q 2350,54 2400,38"/>
+
+    <!-- Snake B: y=100, amplitude=46, wavelength=300 (8 waves × 300 = 2400) — main -->
+    <path id="pB" fill="none" stroke-linecap="round"
+      d="M 0,100 Q 75,54 150,100 Q 225,146 300,100
+         Q 375,54 450,100 Q 525,146 600,100
+         Q 675,54 750,100 Q 825,146 900,100
+         Q 975,54 1050,100 Q 1125,146 1200,100
+         Q 1275,54 1350,100 Q 1425,146 1500,100
+         Q 1575,54 1650,100 Q 1725,146 1800,100
+         Q 1875,54 1950,100 Q 2025,146 2100,100
+         Q 2175,54 2250,100 Q 2325,146 2400,100"/>
+
+    <!-- Snake C: y=162, amplitude=17, wavelength=240 (10 waves × 240 = 2400) -->
+    <path id="pC" fill="none" stroke-linecap="round"
+      d="M 0,162 Q 60,145 120,162 Q 180,179 240,162
+         Q 300,145 360,162 Q 420,179 480,162
+         Q 540,145 600,162 Q 660,179 720,162
+         Q 780,145 840,162 Q 900,179 960,162
+         Q 1020,145 1080,162 Q 1140,179 1200,162
+         Q 1260,145 1320,162 Q 1380,179 1440,162
+         Q 1500,145 1560,162 Q 1620,179 1680,162
+         Q 1740,145 1800,162 Q 1860,179 1920,162
+         Q 1980,145 2040,162 Q 2100,179 2160,162
+         Q 2220,145 2280,162 Q 2340,179 2400,162"/>
+
+    <!-- Snake D: y=100, amplitude=10, wavelength=400, inverted phase (6 waves × 400 = 2400) — counter-direction -->
+    <path id="pD" fill="none" stroke-linecap="round"
+      d="M 0,100 Q 100,110 200,100 Q 300,90 400,100
+         Q 500,110 600,100 Q 700,90 800,100
+         Q 900,110 1000,100 Q 1100,90 1200,100
+         Q 1300,110 1400,100 Q 1500,90 1600,100
+         Q 1700,110 1800,100 Q 1900,90 2000,100
+         Q 2100,110 2200,100 Q 2300,90 2400,100"/>
+
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="240" fill="url(#bg)"/>
-  <rect width="1200" height="240" fill="url(#glow)"/>
+  <style>
+    /* All snake groups translated to start at left edge, path content is 0→2400px */
+    .sA { animation: slither  7s linear infinite; }
+    .sB { animation: slither 11s linear infinite; }
+    .sC { animation: slither  9s linear infinite; }
+    .sD { animation: slither-rev 17s linear infinite; }
 
-  <!-- Stone texture lines -->
-  <line x1="0" y1="60" x2="1200" y2="60" stroke="#1f1f1f" stroke-width="0.5"/>
-  <line x1="0" y1="120" x2="1200" y2="120" stroke="#1f1f1f" stroke-width="0.5"/>
-  <line x1="0" y1="180" x2="1200" y2="180" stroke="#1f1f1f" stroke-width="0.5"/>
-  <line x1="200" y1="0" x2="200" y2="240" stroke="#1f1f1f" stroke-width="0.5"/>
-  <line x1="1000" y1="0" x2="1000" y2="240" stroke="#1f1f1f" stroke-width="0.5"/>
+    @keyframes slither {
+      from { transform: translateX(0px);     }
+      to   { transform: translateX(-1200px); }
+    }
+    @keyframes slither-rev {
+      from { transform: translateX(-1200px); }
+      to   { transform: translateX(0px);     }
+    }
+  </style>
 
-  <!-- Glow behind text -->
-  <ellipse cx="600" cy="120" rx="340" ry="60" fill="#c47a00" opacity="0.06" filter="url(#blur)"/>
+  <!-- Background fill -->
+  <rect width="1200" height="200" fill="url(#bg)"/>
 
-  <!-- Snake left -->
-  <text x="108" y="148" font-family="serif" font-size="88" fill="#c47a00" opacity="0.55" text-anchor="middle">🐍</text>
+  <!-- Snakes — clipped to viewport, rendered back-to-front -->
+  <g clip-path="url(#vp)">
 
-  <!-- Snake right -->
-  <text x="1092" y="148" font-family="serif" font-size="88" fill="#c47a00" opacity="0.55" text-anchor="middle">🐍</text>
+    <!-- Snake A: thin, near top -->
+    <g class="sA" opacity="0.4">
+      <use href="#pA" stroke="#0b3318" stroke-width="4"/>
+      <use href="#pA" stroke="#1a6b38" stroke-width="2"/>
+    </g>
 
-  <!-- Main title -->
-  <text x="600" y="118"
+    <!-- Snake D: ghost snake drifting the other way -->
+    <g class="sD" opacity="0.18">
+      <use href="#pD" stroke="#052e16" stroke-width="4"/>
+      <use href="#pD" stroke="#0d5c26" stroke-width="2"/>
+    </g>
+
+    <!-- Snake C: medium, near bottom -->
+    <g class="sC" opacity="0.52">
+      <use href="#pC" stroke="#0d4d22" stroke-width="7"/>
+      <use href="#pC" stroke="#16a34a" stroke-width="3.5"/>
+      <use href="#pC" stroke="#4ade80" stroke-width="1.5"/>
+    </g>
+
+    <!-- Snake B: main — wide, dramatic, glowing highlight -->
+    <g class="sB">
+      <use href="#pB" stroke="#062710" stroke-width="13" opacity="0.75"/>
+      <use href="#pB" stroke="#15803d" stroke-width="7"  opacity="0.9"/>
+      <use href="#pB" stroke="#4ade80" stroke-width="2.5" opacity="0.55" filter="url(#snakeGlow)"/>
+    </g>
+
+  </g>
+
+  <!-- Vignette over snakes so text is readable -->
+  <rect width="1200" height="200" fill="url(#textBg)"/>
+
+  <!-- "Medusa Gaze" — only text, no subtitle -->
+  <text
+    x="600"
+    y="116"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="62"
+    font-size="80"
     font-weight="bold"
-    letter-spacing="12"
-    fill="#c47a00"
-    text-anchor="middle"
-    opacity="0.95">MEDUSA GAZE</text>
-
-  <!-- Subtitle -->
-  <text x="600" y="158"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="16"
     letter-spacing="6"
-    fill="#7a5a2a"
-    text-anchor="middle">INTERROGATE · LOCK · EXECUTE · DELETE</text>
+    text-anchor="middle"
+    fill="#a7f3d0"
+    paint-order="stroke"
+    stroke="#020c04"
+    stroke-width="14"
+    stroke-linejoin="round"
+    filter="url(#textGlow)">Medusa Gaze</text>
 
-  <!-- Top border -->
-  <line x1="80" y1="28" x2="1120" y2="28" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
-  <!-- Bottom border -->
-  <line x1="80" y1="212" x2="1120" y2="212" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
-  <!-- Corner marks -->
-  <rect x="80" y="22" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
-  <rect x="1112" y="22" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
-  <rect x="80" y="210" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
-  <rect x="1112" y="210" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
 </svg>
