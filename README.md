@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/header.svg?v=2" width="100%" alt="Medusa Gaze Header">
+  <img src="assets/header-v2.svg" width="100%" alt="Medusa Gaze Header">
 </p>
 
 ## 🐍 Close tasks for real, not just complete them
