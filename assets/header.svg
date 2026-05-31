@@ -200,11 +200,12 @@
   <rect width="1200" height="220" fill="url(#vign)"/>
 
   <text
-    x="600" y="132"
+    x="600" y="110"
+    dominant-baseline="central"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="88"
-    font-weight="bold"
-    letter-spacing="8"
+    font-size="120"
+    font-weight="900"
+    letter-spacing="6"
     text-anchor="middle"
     fill="#d4fde8"
     filter="url(#tglow)">MEDUSA GAZE</text>
