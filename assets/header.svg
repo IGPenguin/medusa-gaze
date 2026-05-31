@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="1200" height="240">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d0d"/>
+      <stop offset="100%" style="stop-color:#1a1008"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a2c00;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#c47a00;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#4a2c00;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="240" fill="url(#bg)"/>
+  <rect width="1200" height="240" fill="url(#glow)"/>
+
+  <!-- Stone texture lines -->
+  <line x1="0" y1="60" x2="1200" y2="60" stroke="#1f1f1f" stroke-width="0.5"/>
+  <line x1="0" y1="120" x2="1200" y2="120" stroke="#1f1f1f" stroke-width="0.5"/>
+  <line x1="0" y1="180" x2="1200" y2="180" stroke="#1f1f1f" stroke-width="0.5"/>
+  <line x1="200" y1="0" x2="200" y2="240" stroke="#1f1f1f" stroke-width="0.5"/>
+  <line x1="1000" y1="0" x2="1000" y2="240" stroke="#1f1f1f" stroke-width="0.5"/>
+
+  <!-- Glow behind text -->
+  <ellipse cx="600" cy="120" rx="340" ry="60" fill="#c47a00" opacity="0.06" filter="url(#blur)"/>
+
+  <!-- Snake left -->
+  <text x="108" y="148" font-family="serif" font-size="88" fill="#c47a00" opacity="0.55" text-anchor="middle">🐍</text>
+
+  <!-- Snake right -->
+  <text x="1092" y="148" font-family="serif" font-size="88" fill="#c47a00" opacity="0.55" text-anchor="middle">🐍</text>
+
+  <!-- Main title -->
+  <text x="600" y="118"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="62"
+    font-weight="bold"
+    letter-spacing="12"
+    fill="#c47a00"
+    text-anchor="middle"
+    opacity="0.95">MEDUSA GAZE</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="158"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="16"
+    letter-spacing="6"
+    fill="#7a5a2a"
+    text-anchor="middle">INTERROGATE · LOCK · EXECUTE · DELETE</text>
+
+  <!-- Top border -->
+  <line x1="80" y1="28" x2="1120" y2="28" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
+  <!-- Bottom border -->
+  <line x1="80" y1="212" x2="1120" y2="212" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
+  <!-- Corner marks -->
+  <rect x="80" y="22" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
+  <rect x="1112" y="22" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
+  <rect x="80" y="210" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
+  <rect x="1112" y="210" width="8" height="8" fill="none" stroke="#c47a00" stroke-width="0.8" opacity="0.4"/>
+</svg>

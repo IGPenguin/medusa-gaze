@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "medusa-gaze",
+  "description": "Medusa Gaze — Claude Code skills by Adam Svoboda",
+  "owner": {
+    "name": "Adam Svoboda",
+    "email": "eidamsvoboda@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "medusa",
+      "description": "Medusa Gaze — interrogates tasks into locked scope, executes them precisely, and deletes them from the backlog",
+      "author": {
+        "name": "Adam Svoboda"
+      },
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/IGPenguin/medusa-gaze.git",
+        "path": "claude-skill",
+        "ref": "chaos"
+      }
+    }
+  ]
+}
