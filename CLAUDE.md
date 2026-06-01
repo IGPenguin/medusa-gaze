@@ -41,5 +41,6 @@ medusa-gaze/
 - Branch: `chaos`
 - Config installs to `~/.claude/medusa/`
 - Session history (Gaze Files) lives in `.medusa/` in the user's project (gitignored)
+- Activity Book (`activity-types.md`) also lives in `.medusa/` in the user's project - Serpent-maintained, grows across sessions, never installed from this repo
 - Install script uses `cp -n` — never overwrites existing user config
 - Sweep mode (queue of tasks) is v2, not in this version

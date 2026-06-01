@@ -16,12 +16,12 @@ Medusa Gaze lives natively inside Claude Code as a `/medusa` skill. No API keys,
 
 Type `/medusa` in any [Claude Code](https://claude.com/product/claude-code) session.
 
-1. Silently reads `CLAUDE.md`, `TODOs.md`, `DESIGN.md`, `CONTENT.md`, `WIKI.md` - whatever's present
+1. Silently reads `CLAUDE.md`, `TODOs.md`, `DESIGN.md`, `CONTENT.md`, `WIKI.md`, and `.medusa/activity-types.md` - whatever's present
 2. Asks which task to complete, or finds the highest priority open item
-3. Interrogates the task - not a checklist, a conversation - until scope is airtight
+3. Interrogates the task - not a checklist, a conversation - until scope is airtight; if the task matches a known activity type, skips to the delta questions only
 4. Generates the **Gaze File** and saves it to disk before touching anything
 5. Executes precisely against the Gaze File; out-of-scope catches go into the Drift Jar
-6. Deletes the task from `TODOs.md` when done, then reviews the Jar
+6. Deletes the task from `TODOs.md` when done, then reviews the Jar, then offers to update the Activity Book
 
 ### Modes
 
@@ -48,6 +48,16 @@ The Gaze File can be executed immediately or saved for a future session.
 ### The Drift Jar
 
 While executing, Medusa catches everything interesting that's out of scope? ideas, adjacent improvements, things noticed in passing - and holds them in the Drift Jar without interrupting execution. At the close, every Jar item gets a decision: push to `TODOs.md`, keep in the Gaze File, or discard. Nothing is silently lost.
+
+### The Activity Book
+
+Over time, Medusa builds a catalog of recognized task patterns for your project. It lives in `.medusa/activity-types.md` and is maintained entirely by the Serpent - you never write to it directly.
+
+When a task matches a known type, Medusa skips the questions the archetype already answers and asks only the delta - the one or two things specific to this instance. The Gaze File's Execution Plan is pre-populated with the archetype's standard steps.
+
+At the end of every session, Medusa asks whether the task introduced a pattern worth adding. You say yes or no. New entries are written immediately; existing entries can be updated if a session revealed a gap or new pitfall.
+
+The book only grows when a genuinely new, recurring pattern appears. One-off tasks don't get entries.
 
 ### Safety
 
