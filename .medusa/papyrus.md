@@ -10,6 +10,7 @@
 **Priority:** [P0 / P1 / P2 / P3 / P4]
 **Effort:** [XS / S / M / L / XL]
 **Mode:** [Lock / Strike / Open]
+**Activity Type:** [matched type from Activity Book — omit if none]
 
 ---
 

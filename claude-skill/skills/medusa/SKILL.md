@@ -38,6 +38,7 @@ Silently attempt to read each of these files in the current working directory. R
 3. `DESIGN.md` — visual and UX intent; shapes scope on design tasks; flag contradictions during interrogation
 4. `CONTENT.md` — voice, tone, content rules; shapes scope on copy and text tasks
 5. `WIKI.md` — public-facing documentation; flags when a task has documentation consequences
+6. `.medusa/activity-types.md` — the Activity Book; recognized task archetypes with file patterns, standard steps, pitfalls, and delta questions; parse and hold as context for interrogation if present
 
 ## Phase 3 — Mode Detection
 
@@ -62,6 +63,20 @@ Ask: *"Which task do you want to seal — or should I find the highest priority 
 If the user defers to you: find the highest priority unfinished task in TODOs.md (P0 first, then P1, etc.) and propose it with a one-line reason. Wait for confirmation before proceeding.
 
 ## Phase 5 — Interrogation (Lock mode only)
+
+**Activity Book classification:**
+
+Before asking anything, check if `.medusa/activity-types.md` was loaded in Phase 2. If it was and contains entries, silently classify the task against known activity types.
+
+**If a match is found:** Surface it immediately and ask only the delta questions from the matched entry:
+
+> *"This looks like a [Activity Type Name] task — I know the pattern. Just one thing I need from you: [delta question(s)]."*
+
+Skip any interrogation question the archetype already answers (file locations, standard pitfalls, known dependencies). If the delta questions fully close the scope, skip the rest of Phase 5 entirely and proceed to Phase 6.
+
+**If no match or no Activity Book:** full interrogation as normal.
+
+---
 
 **Skip interrogation only if the task already has all of:**
 - Explicit, testable acceptance criteria
@@ -99,6 +114,8 @@ Explain what you'd ask of the sibling and why. Wait for yes before invoking. Nev
 ## Phase 6 — Gaze File
 
 After interrogation (or immediately in Strike mode), generate the Gaze File using the structure from `papyrus.md` and save it to disk before any execution begins.
+
+**If an activity type was matched:** Pre-populate the Execution Plan with the archetype's standard steps in order, then append the task-specific steps derived from interrogation. Set the `Activity Type` field in the Gaze File header to the matched type name.
 
 **Location:** `.medusa/gaze-YYYY-MM-DD-HHMM-[task-slug].md`
 
@@ -161,6 +178,41 @@ For each Jar item, the human chooses:
 - **→ Discard** — human explicitly says throw it away
 
 Nothing is discarded silently. Ever. Only after every Jar item has a decision is the session fully sealed.
+
+**Stage 3 — Activity Book:**
+
+After every Jar item has a decision, one final question:
+
+> *"Did this task introduce a pattern worth adding to the Activity Book? If yes, I'll write the entry now — otherwise we're done."*
+
+**If yes:** Write a new entry to `.medusa/activity-types.md` using this format:
+
+```
+## [Activity Type Name]
+
+**Signature:** [one-line description of what task types match this archetype]
+
+**Files to open first:**
+- [file path] — [what to look for]
+
+**Standard execution steps:**
+1. [step]
+
+**Known pitfalls:**
+- [pitfall] — [why it happens and how to avoid it]
+
+**Boilerplate acceptance criteria:**
+- [ ] [criterion that applies to all tasks of this type]
+
+**Delta questions (ask these during interrogation):**
+- [the one or two things the archetype can't answer per-task]
+```
+
+If the file doesn't exist, create it with a header line: `# Activity Book`. Report what was added in one sentence. If this session matched an existing entry and revealed a gap or new pitfall, offer to update that entry instead.
+
+**If no:** close the session.
+
+Do not add entries for one-off tasks with no recurrence signal. Do not over-abstract — one entry per concrete recognizable pattern.
 
 ## Phase 9 — Save History
 
