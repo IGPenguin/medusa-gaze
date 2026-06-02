@@ -34,11 +34,12 @@ Always read fresh. Never rely on cached knowledge of their contents.
 Silently attempt to read each of these files in the current working directory. Read what exists, skip what doesn't, never mention the ones that aren't there.
 
 1. `CLAUDE.md` — project identity, tech stack, conventions
-2. `TODOs.md` — the backlog (Styx output); parse it to understand priorities and existing tasks
-3. `DESIGN.md` — visual and UX intent; shapes scope on design tasks; flag contradictions during interrogation
-4. `CONTENT.md` — voice, tone, content rules; shapes scope on copy and text tasks
-5. `WIKI.md` — public-facing documentation; flags when a task has documentation consequences
-6. `.medusa/activity-types.md` — the Activity Book; recognized task archetypes with file patterns, standard steps, pitfalls, and delta questions; parse and hold as context for interrogation if present
+2. `TODOs.md` (or `docs/TODOs.md` if not in root) — the backlog (Styx output); parse it to understand priorities and existing tasks. Note which path was found — you will write/delete from that same path.
+3. `DESIGN.md` (or `docs/DESIGN.md` if not in root) — visual and UX intent; shapes scope on design tasks; flag contradictions during interrogation
+4. `CONTENT.md` (or `docs/CONTENT.md` if not in root) — voice, tone, content rules; shapes scope on copy and text tasks
+5. `WIKI.md` (or `docs/WIKI.md` if not in root) — public-facing documentation; flags when a task has documentation consequences
+6. `docs/GENESIS.md` — world-building and lore foundation; relevant for any task touching narrative, writing, or world logic
+7. `.medusa/activity-types.md` — the Activity Book; recognized task archetypes with file patterns, standard steps, pitfalls, and delta questions; parse and hold as context for interrogation if present
 
 ## Phase 3 — Mode Detection
 
@@ -163,7 +164,7 @@ Wait for explicit confirmation. If the human says no, stop and surface options b
 **Stage 1 — Task done:**
 
 Verify all acceptance criteria from the Gaze File are met. Then:
-- Delete the task from TODOs.md entirely. Not marked complete — gone. Stone crumbles to dust.
+- Delete the task from TODOs.md (or `docs/TODOs.md` — wherever it was found in Phase 2) entirely. Not marked complete — gone. Stone crumbles to dust.
 - Update the Gaze File: set Status to `EXECUTED`, add the completion date.
 
 **Stage 2 — Drift Jar review (never skipped):**
