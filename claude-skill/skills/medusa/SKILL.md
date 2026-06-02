@@ -22,10 +22,11 @@ When you're done: the task is deleted from TODOs.md. Stone crumbles. Then the Ja
 
 ## Phase 1 — Load Standards
 
-Silently read both files using the Read tool:
+Silently read all three files using the Read tool:
 
 1. `~/.claude/medusa/manifesto.md` — execution philosophy: what "done" means, scoping discipline, the Drift Jar rule
 2. `~/.claude/medusa/papyrus.md` — the Gaze File template
+3. `~/.claude/medusa/activity-types.md` — the **Global Activity Book**; cross-project archetypes available in every repo; parse and hold alongside the project-local book loaded in Phase 2
 
 Always read fresh. Never rely on cached knowledge of their contents.
 
@@ -39,7 +40,7 @@ Silently attempt to read each of these files in the current working directory. R
 4. `CONTENT.md` (or `docs/CONTENT.md` if not in root) — voice, tone, content rules; shapes scope on copy and text tasks
 5. `WIKI.md` (or `docs/WIKI.md` if not in root) — public-facing documentation; flags when a task has documentation consequences
 6. `docs/GENESIS.md` — world-building and lore foundation; relevant for any task touching narrative, writing, or world logic
-7. `.medusa/activity-types.md` — the Activity Book; recognized task archetypes with file patterns, standard steps, pitfalls, and delta questions; parse and hold as context for interrogation if present
+7. `.medusa/activity-types.md` — the **Project Activity Book**; recognized task archetypes specific to this codebase; parse and hold alongside the Global Activity Book loaded in Phase 1
 
 ## Phase 3 — Mode Detection
 
@@ -67,7 +68,7 @@ If the user defers to you: find the highest priority unfinished task in TODOs.md
 
 **Activity Book classification:**
 
-Before asking anything, check if `.medusa/activity-types.md` was loaded in Phase 2. If it was and contains entries, silently classify the task against known activity types.
+Before asking anything, classify the task against all loaded archetypes — check the Project Activity Book first (project-specific patterns take precedence), then the Global Activity Book. Both may be empty or absent; handle gracefully.
 
 **If a match is found:** Surface it immediately and ask only the delta questions from the matched entry:
 
@@ -75,7 +76,7 @@ Before asking anything, check if `.medusa/activity-types.md` was loaded in Phase
 
 Skip any interrogation question the archetype already answers (file locations, standard pitfalls, known dependencies). If the delta questions fully close the scope, skip the rest of Phase 5 entirely and proceed to Phase 6.
 
-**If no match or no Activity Book:** full interrogation as normal.
+**If no match in either book:** full interrogation as normal.
 
 ---
 
@@ -186,7 +187,12 @@ After every Jar item has a decision, one final question:
 
 > *"Did this task introduce a pattern worth adding to the Activity Book? If yes, I'll write the entry now — otherwise we're done."*
 
-**If yes:** Write a new entry to `.medusa/activity-types.md` using this format:
+**If yes:** First ask: *"Global pattern (applies to any project) or project-local (specific to this codebase)?"*
+
+- **Global** → write to `~/.claude/medusa/activity-types.md`; strip any project-specific file paths and replace with general descriptions
+- **Project-local** → write to `.medusa/activity-types.md`; keep all project-specific detail
+
+Use this format for either target:
 
 ```
 ## [Activity Type Name]
@@ -194,7 +200,7 @@ After every Jar item has a decision, one final question:
 **Signature:** [one-line description of what task types match this archetype]
 
 **Files to open first:**
-- [file path] — [what to look for]
+- [file path or description] — [what to look for]
 
 **Standard execution steps:**
 1. [step]
@@ -209,7 +215,7 @@ After every Jar item has a decision, one final question:
 - [the one or two things the archetype can't answer per-task]
 ```
 
-If the file doesn't exist, create it with a header line: `# Activity Book`. Report what was added in one sentence. If this session matched an existing entry and revealed a gap or new pitfall, offer to update that entry instead.
+If the target file doesn't exist, create it with a header line: `# Activity Book`. Report what was added in one sentence. If this session matched an existing entry and revealed a gap or new pitfall, offer to update that entry instead.
 
 **If no:** close the session.
 
