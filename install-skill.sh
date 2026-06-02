@@ -26,5 +26,6 @@ fi
 mkdir -p "$MEDUSA_CONFIG"
 cp -n "$REPO_DIR/.medusa/papyrus.md" "$MEDUSA_CONFIG/papyrus.md" 2>/dev/null && echo "  wrote papyrus.md" || echo "  papyrus.md already exists, skipped"
 cp -n "$REPO_DIR/.medusa/manifesto.md" "$MEDUSA_CONFIG/manifesto.md" 2>/dev/null && echo "  wrote manifesto.md" || echo "  manifesto.md already exists, skipped"
+cp -n "$REPO_DIR/.medusa/activity-types.md" "$MEDUSA_CONFIG/activity-types.md" 2>/dev/null && echo "  wrote activity-types.md" || echo "  activity-types.md already exists, skipped"
 
 echo "✨ Done. Restart Claude Code, then type /medusa in any project."
